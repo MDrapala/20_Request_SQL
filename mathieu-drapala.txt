@@ -9,7 +9,7 @@
 #9 SELECT COUNT(film.id) AS "nombre films", SUM(duree_min) AS "minutes totales", genre.nom AS "nom genre"FROM film JOIN genre ON film.genre_id = genre.id WHERE genre_id BETWEEN 3 AND 5 GROUP BY genre_id
 #10 SELECT MIN(f.id) as 'min id film' FROM film f, genre g WHERE f.genre_id = g.id AND g.nom = 'comedy';
 #11 SELECT titre, date_debut_affiche, date_fin_affiche, ROUND((UNIX_TIMESTAMP(date_fin_affiche) - UNIX_TIMESTAMP(date_debut_affiche)) / 3600) AS temps_affiche FROM film HAVING temps_affiche IS NOT NULL 
-#12 SELECT DISTINCT COUNT(a.id) AS nombre_abonnement, AVG(ROUND(a.prix)) AS moyenne_abonnement, m.fiche_perso_id AS membre_abonnée from abonnement a, membre m WHERE m.abo_id <> 0;
+#12 SELECT COUNT(DISTINCT(membre.abo_id)) AS nombre_abonnements, CEIL(AVG(abonnement.prix)) AS moyenne_abonnement, COUNT(membre.id) AS nombre_abonnes FROM membre JOIN abonnement ON abonnement.id = membre.abo_id WHERE membre.abo_id > 0;
 #13 SELECT nom, pourcentage_reduc FROM reduction WHERE pourcentage_reduc > 0 AND pourcentage_reduc <> 25 ORDER BY pourcentage_reduc DESC;
 #14 SELECT nom_salle FROM salle WHERE nbr_siege BETWEEN 100 AND 300 AND etage_salle = 2;
 #15 SELECT g.nom as nom_genre, MAX(f.duree_min) as duree_min FROM genre g, film f WHERE g.id = f.genre_id AND g.nom <> 'null' GROUP BY g.nom;
